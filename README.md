@@ -45,4 +45,4 @@ fluxlabs ag, support@fluxlabs.ch
 This project needs to be rebuilt before it can be maintained.
 
 Are you interested in a rebuild and would you like to participate?
-Take advantage of the crowdfunding opportunity under [discussions](https://github.com/fluxapps/Certificate/discussions/1).
+Take advantage of the crowdfunding opportunity under [discussions](https://github.com/fluxapps/Certificate/discussions/17).
