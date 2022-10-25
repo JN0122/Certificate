@@ -37,3 +37,12 @@ An installation and user guide is available in [the doc/Documentation.pdf](/doc/
 ### Requirements
 * ILIAS 5.4 or ILIAS 6
 * PHP >=7.0
+
+## Rebuild & Maintenance
+
+fluxlabs ag, support@fluxlabs.ch
+
+This project needs to be rebuilt before it can be maintained.
+
+Are you interested in a rebuild and would you like to participate?
+Take advantage of the crowdfunding opportunity under [discussions](https://github.com/fluxapps/Certificate/discussions/1).
