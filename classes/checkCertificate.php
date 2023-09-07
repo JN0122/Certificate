@@ -54,18 +54,18 @@ $decrypted = srCertificateDigitalSignature::decryptSignature(strtr($_GET['signat
 
                                 <?php if ($decrypted) { ?>
                                     <div class="alert alert-info">
-                                        <h2>CHECK CERTIFICATE SIGNATURE</h2>
-                                        <h5 class="ilAccHeadingHidden"><a id="il_message_focus" name="il_message_focus">Informationsmeldung</a>
+                                        <h2>SPRWADŹ WAŻNOŚĆ CERTYFIKATU</h2>
+                                        <h5 class="ilAccHeadingHidden"><a id="il_message_focus" name="il_message_focus" style="color:green">Certyfikat jest ważny.</a>
                                         </h5>
-                                        <p>The decryption was successful.<br/><?php echo $decrypted; ?></p>
+                                        <p>Odszyfrowanie powiodło się.<br/><?php echo $decrypted; ?></p>
                                     </div>
                                 <?php } else { ?>
                                     <div class="alert alert-warning">
-                                        <h2>CHECK CERTIFICATE SIGNATURE</h2>
+                                        <h2>SPRWADŹ WAŻNOŚĆ CERTYFIKATU</h2>
                                         <h5 class="ilAccHeadingHidden">
-                                            <a id="il_message_focus" name="il_message_focus">Fehlermeldung</a>
+                                            <a id="il_message_focus" name="il_message_focus" style="color:red;">Certyfikat jest nieważny.<a/>
                                         </h5>
-                                        <p>The signature value could not be decrypted.</p>
+                                        <p>Nie można odszyfrować certyfikatu.</p>
                                     </div>
                                 <?php } ?>
                             </div>
