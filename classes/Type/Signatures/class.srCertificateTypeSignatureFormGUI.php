@@ -19,7 +19,7 @@ class srCertificateTypeSignatureFormGUI extends ilPropertyFormGUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var
      */

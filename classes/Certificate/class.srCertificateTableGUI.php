@@ -44,11 +44,11 @@ class srCertificateTableGUI extends ilTable2GUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var ilObjUser
      */
-    protected $user;
+    protected ?ilObjUser $user;
     /**
      * @var bool
      */
@@ -115,7 +115,7 @@ class srCertificateTableGUI extends ilTable2GUI
     /**
      * Add filter items
      */
-    public function initFilter()
+    public function initFilter():void
     {
         if ($this->isColumnSelected('id')) {
             $this->addFilterItemWithValue(new ilTextInputGUI($this->pl->txt('cert_id'), 'id'));
@@ -168,7 +168,7 @@ class srCertificateTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    protected function fillRow($a_set)
+    protected function fillRow($a_set):void
     {
         // For checkboxes in first column
         if (count($this->getOption('actions_multi')) && $a_set['status'] == 3) {
@@ -255,7 +255,7 @@ class srCertificateTableGUI extends ilTable2GUI
      * @param ilExcel $worksheet
      * @param int     $row
      */
-    public function fillHeaderExcel(ilExcel $worksheet, &$row)
+    public function fillHeaderExcel(ilExcel $worksheet, &$row):void
     {
         $col = 0;
         foreach ($this->columns as $column) {
@@ -271,7 +271,7 @@ class srCertificateTableGUI extends ilTable2GUI
      * @param int     $a_row
      * @param array   $a_set
      */
-    protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set)
+    protected function fillRowExcel(ilExcel $a_worksheet, &$a_row, $a_set):void
     {
         $col = 0;
         foreach ($this->columns as $column) {
@@ -339,7 +339,7 @@ class srCertificateTableGUI extends ilTable2GUI
     /**
      * @return array
      */
-    public function getSelectableColumns()
+    public function getSelectableColumns():array
     {
         $columns = array();
         foreach ($this->columns as $column) {

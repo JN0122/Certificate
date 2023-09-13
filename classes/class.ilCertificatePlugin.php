@@ -52,7 +52,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
     /**
      * @var ilDB
      */
-    protected $db;
+    protected ilDBInterface $db;
 
     /**
      * @return ilCertificatePlugin
@@ -66,7 +66,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
         return static::$instance;
     }
 
-    protected function init()
+    protected function init():void
     {
         parent::init();
         if (isset($_GET['ulx'])) {
@@ -77,7 +77,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
     /**
      * @return string
      */
-    public function getPluginName()
+    public function getPluginName():string
     {
         return self::PLUGIN_NAME;
     }
@@ -159,7 +159,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
      * Don't activate plugin if preconditions are not given
      * @return bool
      */
-    protected function beforeUpdate()
+    protected function beforeUpdate():bool
     {
         if (!$this->checkPreConditions()) {
             ilUtil::sendFailure("Please uninstall and remove legacy 'CertificateEvents' plugin from server, because it is incompatible / give conflict - It's now integrated in 'Certificate' plugin", true);
@@ -181,7 +181,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
     /**
      * @return bool
      */
-    protected function beforeUninstall()
+    protected function beforeUninstall():bool
     {
         $this->db->dropTable(ilCertificateConfig::TABLE_NAME, false);
         $this->db->dropTable(srCertificateType::TABLE_NAME, false);

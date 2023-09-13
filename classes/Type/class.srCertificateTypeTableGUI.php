@@ -52,7 +52,7 @@ class srCertificateTypeTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    public function fillRow($a_set):void
     {
         $this->tpl->setVariable('TITLE', $a_set['title']);
         $this->tpl->setVariable('DESCRIPTION', $a_set['description']);

@@ -41,7 +41,7 @@ class srCertificatePreview extends srCertificate
         throw new srCertificateException("Can't update CertificatePreview object because it exists only temporary");
     }
 
-    public function create()
+    public function create():void
     {
         throw new srCertificateException("Can't create CertificatePreview object because it exists only temporary");
     }

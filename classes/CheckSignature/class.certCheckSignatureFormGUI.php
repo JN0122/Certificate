@@ -15,7 +15,7 @@ class certCheckSignatureFormGUI extends ilPropertyFormGUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
 
     function __construct()
     {

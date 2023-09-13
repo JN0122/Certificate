@@ -13,7 +13,7 @@ class srCertificateDefinition extends ActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return self::TABLE_NAME;
     }
@@ -22,7 +22,7 @@ class srCertificateDefinition extends ActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName():string
     {
         return self::TABLE_NAME;
     }
@@ -84,7 +84,7 @@ class srCertificateDefinition extends ActiveRecord
         parent::__construct($id);
     }
 
-    public function create()
+    public function create():void
     {
         parent::create();
         $this->type = srCertificateType::find($this->getTypeId());
@@ -144,7 +144,7 @@ class srCertificateDefinition extends ActiveRecord
      * @param int $ref_id ref-ID of new course
      * @return srCertificateDefinition
      */
-    public function copy($ref_id = 0)
+    public function copy($ref_id = 0): ActiveRecord
     {
         $this->log('Certificate: copy definitions from ' . $this->getRefId() . ' to ' . $ref_id);
         $new_definition = srCertificateDefinition::where(array("ref_id" => $ref_id))->first();

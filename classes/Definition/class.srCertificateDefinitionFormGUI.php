@@ -18,7 +18,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
     /**
      * @var ilTemplate
      */
-    protected $tpl;
+    protected ilTemplate $tpl;
     /**
      * @var ilCertificatePlugin
      */
@@ -26,7 +26,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var bool
      */
@@ -42,7 +42,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
     /**
      * @var ilObjUser
      */
-    protected $user;
+    protected ?ilObjUser $user;
 
     /**
      * @param                         $parent_gui

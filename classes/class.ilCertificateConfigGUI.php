@@ -45,7 +45,7 @@ class ilCertificateConfigGUI extends ilPluginConfigGUI
     /**
      * @param $cmd
      */
-    public function performCommand($cmd)
+    public function performCommand($cmd):void
     {
         switch ($cmd) {
             case self::CMD_CONFIGURE:

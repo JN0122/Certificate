@@ -30,7 +30,7 @@ class ilCertificateConfig extends ActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return self::TABLE_NAME;
     }
@@ -39,7 +39,7 @@ class ilCertificateConfig extends ActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName():string
     {
         return self::TABLE_NAME;
     }
@@ -55,7 +55,7 @@ class ilCertificateConfig extends ActiveRecord
     /**
      * @var bool
      */
-    protected $ar_safe_read = false;
+    protected bool $ar_safe_read = false;
     /**
      * @var string
      * @db_has_field        true

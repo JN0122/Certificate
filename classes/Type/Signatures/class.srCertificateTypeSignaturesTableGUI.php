@@ -55,7 +55,7 @@ class srCertificateTypeSignaturesTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    public function fillRow($a_set):void
     {
         $skip_fields = array('id');
         foreach ($a_set as $k => $v) {

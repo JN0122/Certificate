@@ -47,7 +47,7 @@ class srCertificateTypeStandardPlaceholdersTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    public function fillRow($a_set):void
     {
         $this->tpl->setVariable('IDENTIFIER', $a_set['identifier']);
         $this->tpl->setVariable('DESCRIPTION', $a_set['description']);

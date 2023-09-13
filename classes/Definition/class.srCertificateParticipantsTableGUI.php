@@ -20,11 +20,11 @@ class srCertificateParticipantsTableGUI extends ilTable2GUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var ilObjUser
      */
-    protected $user;
+    protected ?ilObjUser $user;
     /**
      * @var srCertificateDefinition
      */
@@ -104,7 +104,7 @@ class srCertificateParticipantsTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    protected function fillRow($a_set)
+    protected function fillRow($a_set):void
     {
         $this->tpl->setCurrentBlock('CHECKBOXES');
         $this->tpl->setVariable('VALUE', $a_set['id']);

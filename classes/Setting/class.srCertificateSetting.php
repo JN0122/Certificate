@@ -13,7 +13,7 @@ abstract class srCertificateSetting extends ActiveRecord implements srCertificat
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return static::TABLE_NAME;
     }
@@ -22,7 +22,7 @@ abstract class srCertificateSetting extends ActiveRecord implements srCertificat
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName():string
     {
         return static::TABLE_NAME;
     }

@@ -19,7 +19,7 @@ class srCertificateTypeCustomSettingsTableGUI extends ilTable2GUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var array
      */
@@ -55,7 +55,7 @@ class srCertificateTypeCustomSettingsTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    public function fillRow($a_set):void
     {
         $this->tpl->setVariable('IDENTIFIER', $a_set['identifier']);
         $this->tpl->setVariable('EDITABLE_IN', $a_set['editable_in']);

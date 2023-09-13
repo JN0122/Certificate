@@ -44,7 +44,7 @@ class ilCertificateUIHookGUI extends ilUIHookPluginGUI
      * @param       $a_part
      * @param array $a_par
      */
-    public function modifyGUI($a_comp, $a_part, $a_par = array())
+    public function modifyGUI($a_comp, $a_part, $a_par = array()): void
     {
         /**
          * @var $ilTabsGUI ilTabsGUI

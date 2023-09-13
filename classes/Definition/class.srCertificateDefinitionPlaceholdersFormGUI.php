@@ -23,7 +23,7 @@ class srCertificateDefinitionPlaceholdersFormGUI extends ilPropertyFormGUI
     /**
      * @var ilTemplate
      */
-    protected $tpl;
+    protected ilTemplate $tpl;
     /**
      * @var ilCertificatePlugin
      */
@@ -31,7 +31,7 @@ class srCertificateDefinitionPlaceholdersFormGUI extends ilPropertyFormGUI
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var
      */
@@ -39,7 +39,7 @@ class srCertificateDefinitionPlaceholdersFormGUI extends ilPropertyFormGUI
     /**
      * @var ilObjUser
      */
-    protected $user;
+    protected ?ilObjUser $user;
 
     /**
      * @param                         $parent_gui

@@ -10,7 +10,7 @@ class srCertificateCustomTypeSettingFormGUI extends ilPropertyFormGUI
     /**
      * @var ilTemplate
      */
-    protected $tpl;
+    protected ilTemplate $tpl;
     /**
      * @var ilCertificatePlugin
      */
@@ -18,11 +18,11 @@ class srCertificateCustomTypeSettingFormGUI extends ilPropertyFormGUI
     /**
      * @var ilLanguage
      */
-    protected $lng;
+    protected ilLanguage $lng;
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var
      */
@@ -34,7 +34,7 @@ class srCertificateCustomTypeSettingFormGUI extends ilPropertyFormGUI
     /**
      * @var ilObjUser
      */
-    protected $user;
+    protected ?ilObjUser $user;
     /**
      * @var srCertificateCustomTypeSetting
      */

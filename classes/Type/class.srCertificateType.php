@@ -16,7 +16,7 @@ class srCertificateType extends ActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return static::TABLE_NAME;
     }
@@ -25,7 +25,7 @@ class srCertificateType extends ActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName():string
     {
         return static::TABLE_NAME;
     }
@@ -328,7 +328,7 @@ class srCertificateType extends ActiveRecord
         }
     }
 
-    public function create()
+    public function create():void
     {
         parent::create();
         $this->createDefaultSettings();

@@ -32,7 +32,7 @@ class srCertificate extends ActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return self::TABLE_NAME;
     }
@@ -41,7 +41,7 @@ class srCertificate extends ActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName():string
     {
         return self::TABLE_NAME;
     }
@@ -227,7 +227,7 @@ class srCertificate extends ActiveRecord
      * If there exists already a certificate for the given definition and user, the version is increased
      * @throws Exception
      */
-    public function create()
+    public function create():void
     {
         if (is_null($this->getDefinition()) || !$this->getUserId()) {
             throw new Exception("srCertificate::create() must have valid Definition and User-ID");

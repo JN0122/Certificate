@@ -15,7 +15,7 @@ class ilCertificateConfigFormGUI extends ilPropertyFormGUI
     /**
      * @var  ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
     /**
      * @var ilCertificatePlugin
      */

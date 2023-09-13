@@ -54,7 +54,7 @@ class srCertificateTypeSettingsTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    public function fillRow($a_set):void
     {
         $this->tpl->setVariable('SETTING', $a_set['setting']);
         $this->tpl->setVariable('EDITABLE_IN', $a_set['editable_in']);

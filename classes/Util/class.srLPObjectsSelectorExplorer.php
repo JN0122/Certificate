@@ -34,7 +34,7 @@ class srLPObjectsSelectorExplorer extends ilRepositorySelectorExplorerGUI
      * @param array $a_node
      * @return bool
      */
-    function isNodeVisible($a_node)
+    function isNodeVisible($a_node):bool
     {
         $lp = ilCourseLP::getInstance(ilObjCourse::_lookupObjectId($this->getRootId()))->getCollectionInstance();
         $LP_items = is_null($lp) ? [] : $lp->getPossibleItems($this->getRootId());
