@@ -12,6 +12,13 @@ use srag\Plugins\Certificate\Menu\Menu;
 class ilCertificatePlugin extends ilUserInterfaceHookPlugin
 {
     use DICTrait;
+
+    const CTYPE = "Services";
+    /** @var string */
+    const CNAME = "UIComponent";
+    /** @var string */
+    const SLOT_ID = "uihk";
+
     const PLUGIN_ID = 'cert';
     const PLUGIN_NAME = 'Certificate';
     /**
@@ -59,11 +66,24 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
      */
     public static function getInstance()
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
+	global $DIC;
+        if (self::$instance instanceof self) {
+            return self::$instance;
         }
 
-        return static::$instance;
+	 /** @var ilComponentRepository $component_repository */
+        $component_repository = $DIC['component.repository'];
+        /** @var ilComponentFactory $component_factory */
+        $component_factory = $DIC['component.factory'];
+
+        $plugin_info = $component_repository->getComponentByTypeAndName(
+            self::CTYPE,
+            self::CNAME
+        )->getPluginSlotById(self::SLOT_ID)->getPluginByName(self::PLUGIN_NAME);
+
+        self::$instance = $component_factory->getPlugin($plugin_info->getId());
+
+        return self::$instance;
     }
 
     protected function init():void
@@ -82,14 +102,17 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
         return self::PLUGIN_NAME;
     }
 
-    public function __construct()
+    public function __construct(ilDBInterface $db,
+        ilComponentRepositoryWrite $component_repository,
+        string $id)
     {
-        parent::__construct();
+        parent::__construct($db, $component_repository, $id);
         global $DIC;
 
         $this->ilPluginAdmin = $DIC["ilPluginAdmin"];
         $this->tree = $DIC->repositoryTree();
-        $this->db = $DIC->database();
+        //$this->db = $DIC->database();
+	$this->db = $db;
     }
 
     /**

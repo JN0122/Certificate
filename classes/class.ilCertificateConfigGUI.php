@@ -5,6 +5,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
  * Class ilCertificateConfigGUI
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  */
+
+/**
+ * @ilCtrl_Calls ilCertificateConfigGUI: ilCertificateConfigFormGUI
+ * @ilCtrl_IsCalledBy ilCertificateConfigGUI: ilObjComponentSettingsGUI
+ */
+
 class ilCertificateConfigGUI extends ilPluginConfigGUI
 {
 
