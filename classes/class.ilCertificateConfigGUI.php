@@ -7,7 +7,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
  */
 
 /**
- * @ilCtrl_Calls ilCertificateConfigGUI: ilCertificateConfigFormGUI
  * @ilCtrl_IsCalledBy ilCertificateConfigGUI: ilObjComponentSettingsGUI
  */
 

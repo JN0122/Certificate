@@ -60,7 +60,7 @@ class TabsInputGUITab
     /**
      *
      */
-    public function __clone()/*:void*/
+    public function __clone():void
     {
         if ($this->inputs_generated !== null) {
             $this->inputs_generated = array_map(function (ilFormPropertyGUI $input) : ilFormPropertyGUI {

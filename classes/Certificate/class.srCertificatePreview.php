@@ -104,7 +104,7 @@ class srCertificatePreview extends srCertificate
     {
         if (!$this->temp_dir) {
             $tmpdir = ilUtil::ilTempnam();
-            ilUtil::makeDir($tmpdir);
+            ilFileUtils::makeDir($tmpdir);
             $this->temp_dir = $tmpdir;
         }
 

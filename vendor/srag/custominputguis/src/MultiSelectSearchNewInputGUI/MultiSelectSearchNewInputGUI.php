@@ -89,7 +89,7 @@ class MultiSelectSearchNewInputGUI extends ilFormPropertyGUI implements ilTableF
      * @param string $key
      * @param mixed  $value
      */
-    public function addOption(string $key, $value)/*:void*/
+    public function addOption(string $key, $value):void
     {
         $this->options[$key] = $value;
     }

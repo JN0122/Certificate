@@ -101,7 +101,7 @@ class srCertificateUserGUI extends srCertificateGUI
     /**
      * @inheritDoc
      */
-    public function executeCommand()/*:void*/
+    public function executeCommand():void
     {
         $this->tpl->setTitle($this->pl->txt('my_certificates'));
         $this->updateStatusFromDraftToNew();

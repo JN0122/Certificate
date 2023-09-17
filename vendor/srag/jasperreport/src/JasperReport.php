@@ -129,7 +129,7 @@ class JasperReport {
 	 */
 	protected function makeTempDir()/*: void*/ {
 		$tmpdir = ilUtil::ilTempnam();
-		ilUtil::makeDir($tmpdir);
+		ilFileUtils::makeDir($tmpdir);
 		$this->setTmpdir($tmpdir);
 	}
 
@@ -239,7 +239,7 @@ class JasperReport {
 		$exit_after = true)/*: void*/ {
 		$output_file = $this->generateOutput();
 
-		ilUtil::deliverFile($output_file . '.pdf', basename($output_file . '.pdf'), '', true, true, $exit_after);
+		ilFileDelivery::deliverFileLegacy($output_file . '.pdf', basename($output_file . '.pdf'), '', true, true, $exit_after);
 	}
 
 

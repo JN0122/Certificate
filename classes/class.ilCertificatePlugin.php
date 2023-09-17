@@ -264,4 +264,10 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
     {
         return new Menu(self::dic()->dic(), $this);
     }
+
+    public function getPrefix(): string
+    {
+        $lh = $this->getLanguageHandler();
+        return $lh->getPrefix();
+    }
 }

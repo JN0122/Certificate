@@ -76,7 +76,7 @@ class TabsInputGUI extends ilFormPropertyGUI implements ilTableFilterItem, ilToo
     /**
      *
      */
-    public function __clone()/*:void*/
+    public function __clone():void
     {
         $this->tabs = array_map(function (TabsInputGUITab $tab) : TabsInputGUITab {
             return clone $tab;

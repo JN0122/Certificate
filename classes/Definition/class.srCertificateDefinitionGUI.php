@@ -633,7 +633,7 @@ class srCertificateDefinitionGUI
         if ($this->crs->getOfflineStatus()) {
             $this->tpl->setAlertProperties($lgui->getAlertProperties());
         }
-        $this->tpl->setTitleIcon(ilUtil::getTypeIconPath('crs', $this->crs->getId(), 'big'));
+        $this->tpl->setTitleIcon(ilObject::_getIcon($this->crs->getId(), 'big','crs'));
         $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'ref_id', $this->ref_id);
         $this->tabs->setBackTarget($this->pl->txt('back_to_course'),
             $this->ctrl->getLinkTargetByClass(ilRepositoryGUI::class));

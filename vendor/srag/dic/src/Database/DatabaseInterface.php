@@ -82,7 +82,7 @@ interface DatabaseInterface extends ilDBPdoInterface
      * @param array  $columns
      * @param array  $values
      */
-    public function multipleInsert(string $table_name, array $columns, array $values)/*:void*/ ;
+    public function multipleInsert(string $table_name, array $columns, array $values):void ;
 
 
     /**

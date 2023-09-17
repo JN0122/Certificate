@@ -164,7 +164,7 @@ class DatabaseDetector extends AbstractILIASDatabaseDetector
     /**
      * @inheritDoc
      */
-    public function multipleInsert(string $table_name, array $columns, array $values)/*:void*/
+    public function multipleInsert(string $table_name, array $columns, array $values):void
     {
         if (empty($columns) || empty($values)) {
             return;

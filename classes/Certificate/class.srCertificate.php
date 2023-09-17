@@ -423,9 +423,9 @@ class srCertificate extends ActiveRecord
             $zip_filename = date('d-m-Y') . '-' . $filename;
             // Make a random temp dir in ilias data directory
             $tmp_dir = ilUtil::ilTempnam();
-            ilUtil::makeDir($tmp_dir);
+            ilFileUtils::makeDir($tmp_dir);
             $zip_base_dir = $tmp_dir . DIRECTORY_SEPARATOR . $zip_filename;
-            ilUtil::makeDir($zip_base_dir);
+            ilFileUtils::makeDir($zip_base_dir);
             // Copy all PDFs in folder
             foreach ($cert_ids as $cert_id) {
                 /** @var srCertificate $cert */
