@@ -98,7 +98,7 @@ class srCertificateSignature extends ActiveRecord
 
     public function download()
     {
-        ilUtil::deliverFile($this->getFilePath(true),
+        ilFileDelivery::deliverFileLegacy($this->getFilePath(true),
             'signature_' . $this->getLastName() . '_' . $this->getFirstName() . '.' . $this->getSuffix());
     }
 

@@ -23,7 +23,7 @@ class srCertificateDefinitionPlaceholdersFormGUI extends ilPropertyFormGUI
     /**
      * @var ilTemplate
      */
-    protected ilTemplate $tpl;
+    protected $tpl;
     /**
      * @var ilCertificatePlugin
      */

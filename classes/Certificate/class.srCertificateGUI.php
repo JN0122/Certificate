@@ -53,7 +53,7 @@ abstract class srCertificateGUI
     {
         global $DIC;
         $this->tpl->setTitleIcon(ilCertificatePlugin::getPluginIconImage());
-        $DIC["ilMainMenu"]->setActive('none');
+        //$DIC["ilMainMenu"]->setActive('none');
         if (!$this->checkPermission()) {
             ilUtil::sendFailure($this->pl->txt('msg_no_permission'), true);
             if (self::version()->is6()) {

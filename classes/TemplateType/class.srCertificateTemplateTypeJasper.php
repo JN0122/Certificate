@@ -71,7 +71,7 @@ class srCertificateTemplateTypeJasper extends srCertificateTemplateType
             // Move pdf to correct certificate location
             $cert_path = $cert->getCertificatePath();
             if (!file_exists($cert_path)) {
-                ilUtil::makeDirParents($cert_path);
+                ilFileUtils::makeDirParents($cert_path);
             }
             $from = $report_file . '.pdf';
             $to = $cert->getFilePath();

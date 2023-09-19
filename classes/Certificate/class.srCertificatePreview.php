@@ -85,7 +85,7 @@ class srCertificatePreview extends srCertificate
      */
     public function download($exit_after = true)
     {
-        ilUtil::deliverFile($this->getFilePath(), self::PREVIEW_FILENAME, '', '', true, $exit_after);
+        ilFileDelivery::deliverFileLegacy($this->getFilePath(), self::PREVIEW_FILENAME, '', '', true, $exit_after);
     }
 
     /**
@@ -103,7 +103,7 @@ class srCertificatePreview extends srCertificate
     public function getCertificatePath()
     {
         if (!$this->temp_dir) {
-            $tmpdir = ilUtil::ilTempnam();
+            $tmpdir = ilFileUtils::ilTempnam();
             ilFileUtils::makeDir($tmpdir);
             $this->temp_dir = $tmpdir;
         }

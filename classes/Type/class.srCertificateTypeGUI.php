@@ -331,7 +331,7 @@ class srCertificateTypeGUI
      */
     public function downloadDefaultTemplate()
     {
-        ilUtil::deliverFile(self::plugin()->getPluginObject()->getDirectory() . '/resources/template.jrxml',
+        ilFileDelivery::deliverFileLegacy(self::plugin()->getPluginObject()->getDirectory() . '/resources/template.jrxml',
             'template.jrxml');
     }
 
@@ -342,7 +342,7 @@ class srCertificateTypeGUI
     {
         if (is_file($this->type->getCertificateTemplatesPath(true))) {
             $filename = srCertificateTemplateTypeFactory::getById($this->type->getTemplateTypeId())->getTemplateFilename();
-            ilUtil::deliverFile($this->type->getCertificateTemplatesPath(true), $filename);
+            ilFileDelivery::deliverFileLegacy($this->type->getCertificateTemplatesPath(true), $filename);
         }
         $this->editTemplate();
     }
