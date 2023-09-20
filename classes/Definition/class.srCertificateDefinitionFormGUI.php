@@ -246,7 +246,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
                     break;
                 case srCertificateTypeSetting::IDENTIFIER_SUCCESSOR_COURSE:
                     $input = new ilRepositorySelector2InputGUI($this->pl->txt("setting_id_{$identifier}"), $identifier,
-                        false, get_class($this));
+                        false, $this);
                     $input->setInfo($this->pl->txt("setting_id_{$identifier}_info"));
                     $input->getExplorerGUI()->setClickableTypes(['crs']);
                     $input->getExplorerGUI()->setSelectableTypes(['crs']);
