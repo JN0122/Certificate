@@ -54,9 +54,9 @@ class srCertificateDefinitionGUI
      */
     protected $crs;
     /**
-     * @var ilTemplate
+     * @var ?ilGlobalTemplateInterface
      */
-    protected $tpl;
+    protected ?ilGlobalTemplateInterface $global_tpl = null;
     /**
      * @var ilToolbarGUI
      */
@@ -97,7 +97,7 @@ class srCertificateDefinitionGUI
     {
         global $DIC;
         $this->ctrl = $DIC->ctrl();
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->toolbar = $DIC->toolbar();
         $this->tabs = $DIC->tabs();
         $this->ref_id = (int) $_GET['ref_id'];
@@ -108,10 +108,10 @@ class srCertificateDefinitionGUI
         $this->db = $DIC->database();
         $this->log = $DIC->logger()->root();
         $this->ctrl->saveParameter($this, 'ref_id');
-        $this->tpl->addJavaScript($this->pl->getStyleSheetLocation('uihk_certificate.js'));
+        $this->global_tpl->addJavaScript($this->pl->getStyleSheetLocation('uihk_certificate.js'));
         $ilLocator = $DIC["ilLocator"];
         $ilLocator->addRepositoryItems();
-        $this->tpl->setVariable("LOCATOR", $ilLocator->getHTML());
+        $this->global_tpl->setVariable("LOCATOR", $ilLocator->getHTML());
     }
 
     /**
@@ -126,9 +126,9 @@ class srCertificateDefinitionGUI
         $cmd = $this->ctrl->getCmd();
         $next_class = $this->ctrl->getNextClass($this);
         if (self::version()->is6()) {
-            $this->tpl->loadStandardTemplate();
+            $this->global_tpl->loadStandardTemplate();
         } else {
-        $this->tpl->getStandardTemplate();
+        $this->global_tpl->getStandardTemplate();
         }
         switch ($next_class) {
             case strtolower(srCertificateDefinitionFormGUI::class):
@@ -181,9 +181,9 @@ class srCertificateDefinitionGUI
                 break;
         }
         if (self::version()->is6()) {
-            $this->tpl->printToStdout();
+            $this->global_tpl->printToStdout();
         } else {
-        $this->tpl->show();
+        $this->global_tpl->show();
         }
     }
 
@@ -199,7 +199,7 @@ class srCertificateDefinitionGUI
                 $button->setUrl($this->ctrl->getLinkTarget($this, self::CMD_PREVIEW_CERTIFICATE));
                 $this->toolbar->addButtonInstance($button);
             } else {
-                ilUtil::sendInfo($this->pl->txt('msg_info_current_type_no_invalid_tempalte'));
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('msg_info_current_type_no_invalid_tempalte'));
             }
         }
     }
@@ -218,7 +218,7 @@ class srCertificateDefinitionGUI
                     $button->setUrl($this->ctrl->getLinkTarget($this, self::CMD_PREVIEW_PARTICIPATION_CERTIFICATE));
                     $this->toolbar->addButtonInstance($button);
                 } else {
-                    ilUtil::sendInfo($this->pl->txt('msg_info_current_type_no_invalid_tempalte'));
+                    $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('msg_info_current_type_no_invalid_tempalte'));
                 }
             }
         }
@@ -262,7 +262,7 @@ class srCertificateDefinitionGUI
     {
         $this->tabs->activateSubTab(self::TAB_SHOW_DEFINITION);
         $this->initForm();
-        $this->tpl->setContent($this->form->getHTML());
+        $this->global_tpl->setContent($this->form->getHTML());
         if ($this->definition) {
             $this->showPreviewCertificateInToolbar();
         }
@@ -287,10 +287,10 @@ class srCertificateDefinitionGUI
         /** @var srCertificateDefinition $definition */
         $definition = srCertificateDefinition::where(array('ref_id' => $this->ref_id))->first();
         if (!count($definition->getPlaceholderValues()) && !$this->definition->getType()->getSignatures()) {
-            ilUtil::sendInfo($this->pl->txt('msg_no_placeholders'));
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('msg_no_placeholders'));
         } else {
             $this->form = new srCertificateDefinitionPlaceholdersFormGUI($this, $definition);
-            $this->tpl->setContent($this->form->getHTML());
+            $this->global_tpl->setContent($this->form->getHTML());
         }
     }
 
@@ -302,7 +302,7 @@ class srCertificateDefinitionGUI
         $this->tabs->activateSubTab(self::TAB_PARTICIPATION_CERTIFICATE);
         $this->showPreviewParticipationCertificateInToolbar();
         $this->form = new srCertParticipationCertificateFormGUI($this, $this->definition);
-        $this->tpl->setContent($this->form->getHTML());
+        $this->global_tpl->setContent($this->form->getHTML());
     }
 
     /**
@@ -325,7 +325,7 @@ class srCertificateDefinitionGUI
             'show_filter' => false,
         );
         $table = new srCertificateTableGUI($this, self::CMD_SHOW_CERTIFICATES, $options);
-        $this->tpl->setContent($table->getHTML());
+        $this->global_tpl->setContent($table->getHTML());
     }
 
     /**
@@ -335,7 +335,7 @@ class srCertificateDefinitionGUI
     {
         $this->tabs->activateSubTab(self::TAB_SHOW_PARTICIPANTS);
         $table = new srCertificateParticipantsTableGUI($this, self::CMD_SHOW_PARTICIPANTS, $this->definition);
-        $this->tpl->setContent($table->getHTML());
+        $this->global_tpl->setContent($table->getHTML());
     }
 
     /**
@@ -347,10 +347,10 @@ class srCertificateDefinitionGUI
         $definition = new srCertificateDefinition();
         $this->form = new srCertificateDefinitionFormGUI($this, $definition);
         if ($this->form->saveObject()) {
-            ilUtil::sendSuccess($this->pl->txt('msg_definition_created'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_definition_created'), true);
             $this->ctrl->redirect($this, self::CMD_SHOW_DEFINITION);
         } else {
-            $this->tpl->setContent($this->form->getHTML());
+            $this->global_tpl->setContent($this->form->getHTML());
         }
     }
 
@@ -365,10 +365,10 @@ class srCertificateDefinitionGUI
         } else {
             $this->form = new srCertificateDefinitionFormGUI($this, $this->definition);
             if ($this->form->saveObject()) {
-                ilUtil::sendSuccess($this->pl->txt('msg_definition_updated'), true);
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_definition_updated'), true);
                 $this->ctrl->redirect($this, self::CMD_SHOW_DEFINITION);
             } else {
-                $this->tpl->setContent($this->form->getHTML());
+                $this->global_tpl->setContent($this->form->getHTML());
             }
         }
     }
@@ -381,10 +381,10 @@ class srCertificateDefinitionGUI
         $this->tabs->activateSubTab(self::TAB_SHOW_PLACEHOLDERS);
         $this->form = new srCertificateDefinitionPlaceholdersFormGUI($this, $this->definition);
         if ($this->form->saveObject()) {
-            ilUtil::sendSuccess($this->pl->txt('msg_placeholders_updated'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_placeholders_updated'), true);
             $this->ctrl->redirect($this, $redirect_cmd);
         } else {
-            $this->tpl->setContent($this->form->getHTML());
+            $this->global_tpl->setContent($this->form->getHTML());
         }
     }
 
@@ -400,7 +400,7 @@ class srCertificateDefinitionGUI
             $preview->download();
         } catch (Exception $e) {
             $this->log->log($e->getMessage(), ilLogLevel::ERROR);
-            ilUtil::sendFailure($this->pl->txt('msg_error_preview_certificate'));
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_error_preview_certificate'));
         }
         $this->showCertificates();
     }
@@ -418,7 +418,7 @@ class srCertificateDefinitionGUI
             $preview->download();
         } catch (Exception $e) {
             $this->log->log($e->getMessage(), ilLogLevel::ERROR);
-            ilUtil::sendFailure($this->pl->txt('msg_error_preview_certificate'));
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_error_preview_certificate'));
         }
         $this->showParticipationCertificate();
     }
@@ -464,7 +464,7 @@ class srCertificateDefinitionGUI
     public function setDate()
     {
         $this->tabs->activateSubTab(self::TAB_SHOW_PARTICIPANTS);
-        ilUtil::sendInfo($this->pl->txt('set_date_info'));
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('set_date_info'));
 
         if ($_POST['user_id']) {
             $user_ids = $_POST['user_id'];
@@ -485,7 +485,7 @@ class srCertificateDefinitionGUI
         $form->addCommandButton(self::CMD_SET_DATE_AND_CREATE, $this->pl->txt('save'));
         $form->addCommandButton(self::CMD_SHOW_PARTICIPANTS, $this->pl->txt('cancel'));
 
-        $this->tpl->setContent($form->getHTML());
+        $this->global_tpl->setContent($form->getHTML());
     }
 
     /**
@@ -505,7 +505,7 @@ class srCertificateDefinitionGUI
             $cert->setDefinition($this->definition);
             $cert->create();
         }
-        ilUtil::sendSuccess($this->pl->txt('msg_cert_created'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_cert_created'), true);
         $this->ctrl->redirect($this, self::CMD_SHOW_PARTICIPANTS);
     }
 
@@ -516,7 +516,7 @@ class srCertificateDefinitionGUI
     {
         $certificate->setStatus(srCertificate::STATUS_CALLED_BACK);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_called_back'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_called_back'), true);
         $this->ctrl->redirect($this, self::CMD_SHOW_CERTIFICATES);
     }
 
@@ -527,7 +527,7 @@ class srCertificateDefinitionGUI
     {
         $certificate->setStatus(srCertificate::STATUS_PROCESSED);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_undo_called_back'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_undo_called_back'), true);
         $this->ctrl->redirect($this, self::CMD_SHOW_CERTIFICATES);
     }
 
@@ -538,7 +538,7 @@ class srCertificateDefinitionGUI
     {
         $certificate->setStatus(srCertificate::STATUS_NEW);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_retry_generation'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_retry_generation'), true);
         $this->ctrl->redirect($this, self::CMD_SHOW_CERTIFICATES);
     }
 
@@ -554,7 +554,7 @@ class srCertificateDefinitionGUI
         $conf_gui->addItem('type_id', $new_type_id, $this->pl->txt('confirm_type_change_text'));
         $conf_gui->setConfirm($this->pl->txt('change'), self::CMD_UPDATE_TYPE);
         $conf_gui->setCancel($this->pl->txt('cancel'), self::CMD_SHOW_DEFINITION);
-        $this->tpl->setContent($conf_gui->getHTML());
+        $this->global_tpl->setContent($conf_gui->getHTML());
     }
 
     /**
@@ -566,7 +566,7 @@ class srCertificateDefinitionGUI
         if ($new_type_id && $new_type_id != $this->definition->getTypeId()) {
             $this->definition->setTypeId($new_type_id);
             $this->definition->update();
-            ilUtil::sendSuccess($this->pl->txt('msg_type_updated'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_type_updated'), true);
         }
         $this->ctrl->redirect($this, self::CMD_SHOW_DEFINITION);
     }
@@ -579,10 +579,10 @@ class srCertificateDefinitionGUI
         $this->form = new srCertParticipationCertificateFormGUI($this, $this->definition);
         $this->form->setValuesByPost();
         if ($this->form->storeForm()) {
-            ilUtil::sendSuccess($this->pl->txt('msg_setting_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_setting_saved'), true);
             $this->ctrl->redirect($this, self::CMD_SHOW_PARTICIPATION_CERTIFICATE);
         } else {
-            $this->tpl->setContent($this->form->getHTML());
+            $this->global_tpl->setContent($this->form->getHTML());
         }
     }
 
@@ -594,7 +594,7 @@ class srCertificateDefinitionGUI
     {
         if (!$this->access->checkAccess('write', '', $this->ref_id)) {
             $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'ref_id', $this->ref_id);
-            ilUtil::sendFailure($this->pl->txt('msg_no_permission_certificates'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_no_permission_certificates'), true);
             $this->ctrl->redirectByClass(ilRepositoryGUI::class);
         }
     }
@@ -628,12 +628,12 @@ class srCertificateDefinitionGUI
         $lgui = ilObjectListGUIFactory::_getListGUIByType($this->crs->getType());
         $lgui->initItem($this->crs->getRefId(), $this->crs->getId(), $this->crs->getTitle(),
             $this->crs->getDescription());
-        $this->tpl->setTitle($this->crs->getTitle());
-        $this->tpl->setDescription($this->crs->getDescription());
+        $this->global_tpl->setTitle($this->crs->getTitle());
+        $this->global_tpl->setDescription($this->crs->getDescription());
         if ($this->crs->getOfflineStatus()) {
-            $this->tpl->setAlertProperties($lgui->getAlertProperties());
+            $this->global_tpl->setAlertProperties($lgui->getAlertProperties());
         }
-        $this->tpl->setTitleIcon(ilObject::_getIcon($this->crs->getId(), 'big','crs'));
+        $this->global_tpl->setTitleIcon(ilObject::_getIcon($this->crs->getId(), 'big','crs'));
         $this->ctrl->setParameterByClass(ilRepositoryGUI::class, 'ref_id', $this->ref_id);
         $this->tabs->setBackTarget($this->pl->txt('back_to_course'),
             $this->ctrl->getLinkTargetByClass(ilRepositoryGUI::class));

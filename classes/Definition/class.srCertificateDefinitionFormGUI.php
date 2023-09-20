@@ -20,10 +20,6 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
      */
     protected ilTemplate $tpl;
     /**
-     * @var ?ilGlobalTemplateInterface
-     */
-    protected ?ilGlobalTemplateInterface $global_tpl;
-    /**
      * @var ilCertificatePlugin
      */
     protected $pl;
