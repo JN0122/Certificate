@@ -49,7 +49,7 @@ class srCertificateCustomTypeSettingFormGUI extends ilPropertyFormGUI
         global $DIC;
         parent::__construct();
         $this->parent_gui = $parent_gui;
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->ctrl = $DIC->ctrl();
         $this->lng = $DIC->language();
         $this->rbac = $DIC->rbac()->review();

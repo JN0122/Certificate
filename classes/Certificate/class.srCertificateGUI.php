@@ -59,7 +59,7 @@ abstract class srCertificateGUI
         $this->global_tpl->setTitleIcon(ilCertificatePlugin::getPluginIconImage());
         //$DIC["ilMainMenu"]->setActive('none');
         if (!$this->checkPermission()) {
-            ilUtil::sendFailure($this->pl->txt('msg_no_permission'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_no_permission'), true);
             if (self::version()->is6()) {
                 $this->ctrl->redirectByClass(ilDashboardGUI::class);
             } else {
@@ -135,9 +135,9 @@ abstract class srCertificateGUI
             /** @var srCertificate $cert */
             $cert = srCertificate::find($cert_id);
             if ($cert->getStatus() == srCertificate::STATUS_CALLED_BACK) {
-                ilUtil::sendFailure($this->pl->txt('msg_called_back'));
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_called_back'));
             } elseif ($cert->getStatus() != srCertificate::STATUS_PROCESSED) {
-                ilUtil::sendFailure($this->pl->txt('msg_not_created_yet'));
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('msg_not_created_yet'));
             } else {
                 $cert->download();
             }
