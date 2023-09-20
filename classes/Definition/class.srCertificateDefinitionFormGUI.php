@@ -20,6 +20,10 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
      */
     protected ilTemplate $tpl;
     /**
+     * @var ?ilGlobalTemplateInterface
+     */
+    protected ?ilGlobalTemplateInterface $global_tpl;
+    /**
      * @var ilCertificatePlugin
      */
     protected $pl;
@@ -54,7 +58,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
         parent::__construct();
         $this->parent_gui = $parent_gui;
         $this->definition = $definition;
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->ctrl = $DIC->ctrl();
         $this->pl = ilCertificatePlugin::getInstance();
         $this->isNew = ($this->definition->getId()) ? false : true;
@@ -131,7 +135,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
         $n_types = count($type->getOptions());
         if ($this->isNew) {
             if (!$n_types) {
-                ilUtil::sendInfo($this->pl->txt('msg_no_types_available'));
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('msg_no_types_available'));
             } else {
                 $this->setTitle($title);
                 $this->addItem($type);
@@ -367,7 +371,7 @@ class srCertificateDefinitionFormGUI extends ilPropertyFormGUI
             $options[$type->getId()] = $type->getTitle();
         }
         if (count($invalid) && $this->isNew) {
-            ilUtil::sendInfo(sprintf($this->pl->txt('msg_info_invalid_cert_types'), implode(', ', $invalid)));
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, sprintf($this->pl->txt('msg_info_invalid_cert_types'), implode(', ', $invalid)));
         }
         $item = new ilSelectInputGUI($this->pl->txt('setting_id_type'), 'type_id');
         asort($options);
