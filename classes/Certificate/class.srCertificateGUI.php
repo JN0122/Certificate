@@ -24,7 +24,11 @@ abstract class srCertificateGUI
     /**
      * @var ilTemplate
      */
-    protected $tpl;
+    protected ilTemplate $tpl;
+    /**
+     * @var ilGlobalTemplateInterface
+     */
+    protected ilGlobalTemplateInterface $global_tpl;
     /**
      * @var ilObjUser
      */
@@ -43,7 +47,7 @@ abstract class srCertificateGUI
         global $DIC;
 
         $this->ctrl = $DIC->ctrl();
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->user = $DIC->user();
         $this->rbac = $DIC->rbac()->review();
         $this->pl = ilCertificatePlugin::getInstance();
@@ -52,7 +56,7 @@ abstract class srCertificateGUI
     public function executeCommand()
     {
         global $DIC;
-        $this->tpl->setTitleIcon(ilCertificatePlugin::getPluginIconImage());
+        $this->global_tpl->setTitleIcon(ilCertificatePlugin::getPluginIconImage());
         //$DIC["ilMainMenu"]->setActive('none');
         if (!$this->checkPermission()) {
             ilUtil::sendFailure($this->pl->txt('msg_no_permission'), true);
@@ -64,9 +68,9 @@ abstract class srCertificateGUI
         }
 
         if (self::version()->is6()) {
-            $this->tpl->loadStandardTemplate();
+            $this->global_tpl->loadStandardTemplate();
         } else {
-        $this->tpl->getStandardTemplate();
+        $this->global_tpl->getStandardTemplate();
         }
 
         $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
@@ -94,16 +98,16 @@ abstract class srCertificateGUI
         }
 
         if (self::version()->is6()) {
-            $this->tpl->printToStdout();
+            $this->global_tpl->printToStdout();
         } else {
-        $this->tpl->show();
+        $this->global_tpl->show();
         }
     }
 
     public function index()
     {
         $table = $this->getTable(self::CMD_INDEX);
-        $this->tpl->setContent($table->getHTML());
+        $this->global_tpl->setContent($table->getHTML());
     }
 
     public function applyFilter()

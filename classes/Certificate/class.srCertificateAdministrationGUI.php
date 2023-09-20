@@ -65,7 +65,7 @@ class srCertificateAdministrationGUI extends srCertificateGUI
     {
         $certificate->setStatus(srCertificate::STATUS_CALLED_BACK);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_called_back'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_called_back'), true);
         $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
@@ -76,7 +76,7 @@ class srCertificateAdministrationGUI extends srCertificateGUI
     {
         $certificate->setStatus(srCertificate::STATUS_PROCESSED);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_undo_called_back'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_undo_called_back'), true);
         $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
@@ -87,7 +87,7 @@ class srCertificateAdministrationGUI extends srCertificateGUI
     {
         $certificate->setStatus(srCertificate::STATUS_NEW);
         $certificate->update();
-        ilUtil::sendSuccess($this->pl->txt('msg_retry_generation'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_retry_generation'), true);
         $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
@@ -128,7 +128,7 @@ class srCertificateAdministrationGUI extends srCertificateGUI
      */
     public function executeCommand():void
     {
-        $this->tpl->setTitle($this->pl->txt('administrate_certificates'));
+        $this->global_tpl->setTitle($this->pl->txt('administrate_certificates'));
 
         parent::executeCommand();
     }

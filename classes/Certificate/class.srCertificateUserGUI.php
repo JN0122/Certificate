@@ -103,7 +103,7 @@ class srCertificateUserGUI extends srCertificateGUI
      */
     public function executeCommand():void
     {
-        $this->tpl->setTitle($this->pl->txt('my_certificates'));
+        $this->global_tpl->setTitle($this->pl->txt('my_certificates'));
         $this->updateStatusFromDraftToNew();
 
         parent::executeCommand();
