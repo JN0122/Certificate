@@ -243,7 +243,7 @@ class srCertificateType extends ActiveRecord
     public function getAssets()
     {
         if (!is_dir($this->getCertificateTemplatesPath())) {
-            ilUtil::makeDirParents($this->getCertificateTemplatesPath());
+            ilFileUtils::makeDirParents($this->getCertificateTemplatesPath());
         }
         $files = scandir($this->getCertificateTemplatesPath());
         $tpl_filename = srCertificateTemplateTypeFactory::getById($this->getTemplateTypeId())->getTemplateFilename();
@@ -268,7 +268,7 @@ class srCertificateType extends ActiveRecord
             $file_name = $file_data['name'];
             $file_path = $this->getCertificateTemplatesPath() . DIRECTORY_SEPARATOR . $file_name;
 
-            return ilUtil::moveUploadedFile($file_data['tmp_name'], $file_name, $file_path, false);
+            return ilFileUtils::moveUploadedFile($file_data['tmp_name'], $file_name, $file_path, false);
         }
 
         return false;
@@ -312,7 +312,7 @@ class srCertificateType extends ActiveRecord
     {
         $file_path = $this->getCertificateTemplatesPath();
         if (!is_dir($file_path)) {
-            ilUtil::makeDirParents($file_path);
+            ilFileUtils::makeDirParents($file_path);
         }
     }
 
