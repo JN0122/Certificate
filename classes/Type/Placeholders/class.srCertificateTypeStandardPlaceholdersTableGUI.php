@@ -31,7 +31,7 @@ class srCertificateTypeStandardPlaceholdersTableGUI extends ilTable2GUI
     public function __construct($a_parent_obj, $a_parent_cmd)
     {
         global $DIC;
-        $this->setId('cert_type_standard_placeholders');
+        $this->setId('cert_type_std_placeholders');
         parent::__construct($a_parent_obj, $a_parent_cmd);
         $this->pl = ilCertificatePlugin::getInstance();
         $this->ctrl = $DIC->ctrl();

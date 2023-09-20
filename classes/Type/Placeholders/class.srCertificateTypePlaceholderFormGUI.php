@@ -51,7 +51,7 @@ class srCertificateTypePlaceholderFormGUI extends ilPropertyFormGUI
         parent::__construct();
         $this->parent_gui = $parent_gui;
         $this->placeholder = $placeholder;
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->ctrl = $DIC->ctrl();
         $this->rbac = $DIC->rbac()->review();
         $this->pl = ilCertificatePlugin::getInstance();

@@ -64,10 +64,16 @@ class srCertificateTypeGUI
      * @var srCertificateType
      */
     protected $type;
+    /**
+     * @var ilGlobalTemplateInterface
+     */
+    protected ?ilGlobalTemplateInterface $global_tpl = null;
 
     public function __construct()
     {
+        global $DIC;
         $this->type = (isset($_GET['type_id'])) ? srCertificateType::find((int) $_GET['type_id']) : null;
+        $this->global_tpl = $DIC->ui()->mainTemplate();
     }
 
     public function executeCommand()
@@ -75,7 +81,7 @@ class srCertificateTypeGUI
         self::dic()->mainTemplate()->addJavaScript(self::plugin()->getPluginObject()->getStyleSheetLocation('uihk_certificate.js'));
         self::dic()->mainTemplate()->setTitleIcon(ilCertificatePlugin::getPluginIconImage());
         if (!$this->checkPermission()) {
-            ilUtil::sendFailure(self::plugin()->translate('msg_no_permission'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, self::plugin()->translate('msg_no_permission'), true);
             if (self::version()->is6()) {
                 self::dic()->ctrl()->redirectByClass(ilDashboardGUI::class);
             } else {
@@ -298,8 +304,8 @@ class srCertificateTypeGUI
     {
         $new_type = new srCertificateType();
         $new_type->cloneType($this->type);
-        ilUtil::sendSuccess(self::plugin()->translate('msg_type_copied'), true);
-        ilUtil::sendInfo(self::plugin()->translate('msg_type_copied_info'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_type_copied'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, self::plugin()->translate('msg_type_copied_info'), true);
         self::dic()->ctrl()->redirect($this, self::CMD_SHOW_TYPES);
     }
 
@@ -319,7 +325,7 @@ class srCertificateTypeGUI
     {
         $form = new srCertificateTypeTemplateFormGUI($this, $this->type);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess(self::plugin()->translate('msg_type_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_type_saved'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_EDIT_TEMPLATE);
         } else {
             self::dic()->mainTemplate()->setContent($form->getHTML());
@@ -381,7 +387,7 @@ class srCertificateTypeGUI
     {
         $setting = srCertificateCustomTypeSetting::findOrFail((int) $_POST['custom_setting_id']);
         $setting->delete();
-        ilUtil::sendSuccess(self::plugin()->translate('msg_success_custom_setting_deleted'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_success_custom_setting_deleted'), true);
         self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SETTINGS);
     }
 
@@ -403,7 +409,7 @@ class srCertificateTypeGUI
     {
         $placeholder = srCertificatePlaceholder::findOrFail((int) $_POST['placeholder_id']);
         $placeholder->delete();
-        ilUtil::sendSuccess(self::plugin()->translate('msg_success_custom_placeholder_deleted'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_success_custom_placeholder_deleted'), true);
         self::dic()->ctrl()->redirect($this, self::CMD_SHOW_PLACEHOLDERS);
     }
 
@@ -416,7 +422,7 @@ class srCertificateTypeGUI
             $form = new srCertificateTypeSettingFormGUI($this, $this->type, $_REQUEST['identifier']);
             self::dic()->mainTemplate()->setContent($form->getHTML());
         } catch (Exception $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SETTINGS);
         }
     }
@@ -429,13 +435,13 @@ class srCertificateTypeGUI
         try {
             $form = new srCertificateTypeSettingFormGUI($this, $this->type, $_REQUEST['identifier']);
             if ($form->saveObject()) {
-                ilUtil::sendSuccess(self::plugin()->translate('msg_setting_saved'), true);
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_setting_saved'), true);
                 self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SETTINGS);
             } else {
                 self::dic()->mainTemplate()->setContent($form->getHTML());
             }
         } catch (Exception $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SETTINGS);
         }
     }
@@ -472,7 +478,7 @@ class srCertificateTypeGUI
 
         $form = new srCertificateCustomTypeSettingFormGUI($this, $setting);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess(self::plugin()->translate('msg_setting_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_setting_saved'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SETTINGS);
         } else {
             $form->setValuesByPost();
@@ -489,7 +495,7 @@ class srCertificateTypeGUI
         $table2 = new srCertificateTypePlaceholdersTableGUI($this, self::CMD_SHOW_PLACEHOLDERS, $this->type);
         $spacer = '<div style="height: 30px;"></div>';
         self::dic()->mainTemplate()->setContent($table1->getHTML() . $spacer . $table2->getHTML());
-        ilUtil::sendInfo(self::plugin()->translate('msg_placeholder_format_info', '',
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, self::plugin()->translate('msg_placeholder_format_info', '',
             [srCertificatePlaceholder::PLACEHOLDER_START_SYMBOL, srCertificatePlaceholder::PLACEHOLDER_END_SYMBOL]));
     }
 
@@ -517,7 +523,7 @@ class srCertificateTypeGUI
             $form = new srCertificateTypePlaceholderFormGUI($this, $placeholder);
             self::dic()->mainTemplate()->setContent($form->getHTML());
         } catch (Exception $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_PLACEHOLDERS);
         }
     }
@@ -531,7 +537,7 @@ class srCertificateTypeGUI
         $placeholder->setCertificateType($this->type);
         $form = new srCertificateTypePlaceholderFormGUI($this, $placeholder);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess(self::plugin()->translate('msg_placeholder_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_placeholder_saved'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_PLACEHOLDERS);
         } else {
             self::dic()->mainTemplate()->setContent($form->getHTML());
@@ -550,13 +556,13 @@ class srCertificateTypeGUI
             }
             $form = new srCertificateTypePlaceholderFormGUI($this, $placeholder);
             if ($form->saveObject()) {
-                ilUtil::sendSuccess(self::plugin()->translate('msg_placeholder_saved'), true);
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_placeholder_saved'), true);
                 self::dic()->ctrl()->redirect($this, self::CMD_SHOW_PLACEHOLDERS);
             } else {
                 self::dic()->mainTemplate()->setContent($form->getHTML());
             }
         } catch (ilException $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_PLACEHOLDERS);
         }
     }
@@ -590,7 +596,7 @@ class srCertificateTypeGUI
         $signature->setCertificateType($this->type);
         $form = new srCertificateTypeSignatureFormGUI($this, $signature, $this->type);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess(self::plugin()->translate('msg_signature_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_signature_saved'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SIGNATURES);
         } else {
             self::dic()->mainTemplate()->setContent($form->getHTML());
@@ -610,7 +616,7 @@ class srCertificateTypeGUI
             $form = new srCertificateTypeSignatureFormGUI($this, $signature, $this->type);
             self::dic()->mainTemplate()->setContent($form->getHTML());
         } catch (Exception $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SIGNATURES);
         }
     }
@@ -627,13 +633,13 @@ class srCertificateTypeGUI
             }
             $form = new srCertificateTypeSignatureFormGUI($this, $signature, $this->type);
             if ($form->saveObject()) {
-                ilUtil::sendSuccess(self::plugin()->translate('msg_signature_saved'), true);
+                $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_signature_saved'), true);
                 self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SIGNATURES);
             } else {
                 self::dic()->mainTemplate()->setContent($form->getHTML());
             }
         } catch (ilException $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $e->getMessage(), true);
             self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SIGNATURES);
         }
     }
@@ -648,7 +654,7 @@ class srCertificateTypeGUI
         self::dic()->tabs()->clearTargets();
         self::dic()->tabs()->setBackTarget(self::plugin()->translate('common_back'),
             self::dic()->ctrl()->getLinkTarget($this, self::CMD_VIEW));
-        ilUtil::sendQuestion(self::plugin()->translate('signatures_confirm_delete'));
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_QUESTION, self::plugin()->translate('signatures_confirm_delete'));
 
         $toolbar = new ilToolbarGUI();
         self::dic()->ctrl()->saveParameter($this, 'signature_id');
@@ -671,7 +677,7 @@ class srCertificateTypeGUI
     {
         $signature = srCertificateSignature::find($_GET['signature_id']);
         $signature->delete();
-        ilUtil::sendSuccess(self::plugin()->translate('msg_delete_signature_success'), true);
+        $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_delete_signature_success'), true);
         self::dic()->ctrl()->redirect($this, self::CMD_SHOW_SIGNATURES);
     }
 
@@ -689,7 +695,7 @@ class srCertificateTypeGUI
         $type = ($this->type === null) ? new srCertificateType() : $this->type;
         $form = new srCertificateTypeFormGUI($this, $type);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess(self::plugin()->translate('msg_type_saved'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, self::plugin()->translate('msg_type_saved'), true);
             self::dic()->ctrl()->setParameter($this, 'type_id', $type->getId());
             self::dic()->ctrl()->redirect($this, self::CMD_EDIT_TYPE);
         } else {
