@@ -83,7 +83,7 @@ class srCertificateTypeGUI
             }
         }
 
-        self::dic()->mainMenu()->setActive('none');
+        //self::dic()->mainMenu()->setActive('none');
 
         $cmd = self::dic()->ctrl()->getCmd();
         $next_class = self::dic()->ctrl()->getNextClass($this);
