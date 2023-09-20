@@ -129,7 +129,7 @@ class srCertificateSignature extends ActiveRecord
         if ($file_data['name'] && !$file_data['error']) {
             $file_path = $this->getFilePath(false);
             if (!is_dir($file_path)) {
-                ilUtil::makeDirParents($file_path);
+                ilFileUtils::makeDirParents($file_path);
             }
             $suffix = pathinfo($file_data['name'], PATHINFO_EXTENSION);
             $this->setSuffix($suffix);

@@ -19,6 +19,10 @@ class certCheckSignatureGUI
      */
     protected $tpl;
     /**
+     * @var ilGlobalTemplateInterface
+     */
+    protected ilGlobalTemplateInterface $global_tpl;
+    /**
      * @var ilCertificatePlugin
      */
     protected $pl;
@@ -30,7 +34,7 @@ class certCheckSignatureGUI
     function __construct()
     {
         global $DIC;
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->pl = ilCertificatePlugin::getInstance();
         $this->ctrl = $DIC->ctrl();
     }
@@ -42,9 +46,9 @@ class certCheckSignatureGUI
     {
         $cmd = $this->ctrl->getCmd(self::CMD_SHOW_FORM);
         if (self::version()->is6()) {
-            $this->tpl->loadStandardTemplate();
+            $this->global_tpl->loadStandardTemplate();
         } else {
-        $this->tpl->getStandardTemplate();
+        $this->global_tpl->getStandardTemplate();
         }
         switch ($cmd) {
             case self::CMD_SHOW_FORM:
@@ -56,9 +60,9 @@ class certCheckSignatureGUI
                 break;
         }
         if (self::version()->is6()) {
-            $this->tpl->printToStdout();
+            $this->global_tpl->printToStdout();
         } else {
-        $this->tpl->show();
+        $this->global_tpl->show();
         }
     }
 
@@ -66,23 +70,23 @@ class certCheckSignatureGUI
     {
 
         $form = new certCheckSignatureFormGUI();
-        $this->tpl->setContent($form->getHTML());
+        $this->global_tpl->setContent($form->getHTML());
     }
 
     public function decryptSignature()
     {
         $form = new certCheckSignatureFormGUI();
         if (!$form->checkInput()) {
-            ilUtil::sendFailure($this->pl->txt('decrypt_failed'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('decrypt_failed'), true);
         }
 
         $signature = $form->getInput('signature');
         $decrypted = srCertificateDigitalSignature::decryptSignature($signature);
 
         if ($decrypted) {
-            ilUtil::sendInfo($this->pl->txt('decrypt_successful') . '<br/>' . $decrypted, true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_INFO, $this->pl->txt('decrypt_successful') . '<br/>' . $decrypted, true);
         } else {
-            ilUtil::sendFailure($this->pl->txt('decrypt_failed'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_FAILURE, $this->pl->txt('decrypt_failed'), true);
         }
     }
 }

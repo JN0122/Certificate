@@ -93,7 +93,7 @@ class srCertificatePreview extends srCertificate
      */
     public function __destruct()
     {
-        ilUtil::delDir($this->temp_dir);
+        ilFileUtils::delDir($this->temp_dir);
     }
 
     /**

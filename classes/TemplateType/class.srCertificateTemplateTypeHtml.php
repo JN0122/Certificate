@@ -63,7 +63,7 @@ class srCertificateTemplateTypeHtml extends srCertificateTemplateType
 
         $cert_path = $cert->getCertificatePath();
         if (!file_exists($cert_path)) {
-            ilUtil::makeDirParents($cert_path);
+            ilFileUtils::makeDirParents($cert_path);
         }
 
         $result = $pdf->Output($cert->getFilePath(), 'F'); // (I - Inline, D - Download, F - File)

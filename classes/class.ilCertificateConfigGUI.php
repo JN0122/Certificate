@@ -28,7 +28,11 @@ class ilCertificateConfigGUI extends ilPluginConfigGUI
     /**
      * @var ilTemplate
      */
-    protected $tpl;
+    protected ilTemplate $tpl;
+    /**
+     * @var ilGlobalTemplateInterface
+     */
+    protected ilGlobalTemplateInterface $global_tpl;
     /**
      * @var ilToolbarGUI
      */
@@ -43,7 +47,7 @@ class ilCertificateConfigGUI extends ilPluginConfigGUI
 
         $this->pl = ilCertificatePlugin::getInstance();
         $this->ctrl = $DIC->ctrl();
-        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->global_tpl = $DIC->ui()->mainTemplate();
         $this->toolbar = $DIC->toolbar();
     }
 
@@ -78,7 +82,7 @@ class ilCertificateConfigGUI extends ilPluginConfigGUI
             $ftpl->setVariable("TXT_PLACEHOLDER", $text);
             $ftpl->parseCurrentBlock();
         }
-        $this->tpl->setContent($ftpl->get());
+        $this->global_tpl->setContent($ftpl->get());
     }
 
     /**
@@ -88,11 +92,11 @@ class ilCertificateConfigGUI extends ilPluginConfigGUI
     {
         $form = new ilCertificateConfigFormGUI($this);
         if ($form->saveObject()) {
-            ilUtil::sendSuccess($this->pl->txt('msg_save_config'), true);
+            $this->global_tpl->setOnScreenMessage($this->global_tpl::MESSAGE_TYPE_SUCCESS, $this->pl->txt('msg_save_config'), true);
             $this->ctrl->redirect($this, self::CMD_CONFIGURE);
         } else {
             $form->setValuesByPost();
-            $this->tpl->setContent($form->getHTML());
+            $this->global_tpl->setContent($form->getHTML());
         }
     }
 
