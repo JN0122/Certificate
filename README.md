@@ -35,7 +35,7 @@ Please follow the installation guide of the [documentation](/doc/Documentation.p
 An installation and user guide is available in [the doc/Documentation.pdf](/doc/Documentation.pdf?raw=true) file.
 
 ### Requirements
-* ILIAS 5.4 or ILIAS 6
+* ILIAS 6, ILIAS 7 and ILIAS 8
 * PHP >=7.0
 
 ## Rebuild & Maintenance
