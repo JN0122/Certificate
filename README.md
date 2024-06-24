@@ -19,7 +19,7 @@ Start at your ILIAS root directory
 ```bash
 mkdir -p Customizing/global/plugins/Services/UIComponent/UserInterfaceHook
 cd Customizing/global/plugins/Services/UIComponent/UserInterfaceHook
-git clone https://github.com/studer-raimann/Certificate.git Certificate
+git clone https://github.com/JN0122/ILIAS-Certificate-plugin.git Certificate
 ```
 Update and activate the plugin in the ILIAS Plugin Administration
 
