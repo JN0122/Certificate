@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
 use srag\DIC\Certificate\DICTrait;
 use srag\Plugins\Certificate\Menu\Menu;
 use ILIAS\GlobalScreen\Provider\PluginProviderCollection;
@@ -112,9 +111,7 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
 
         $this->ilPluginAdmin = $DIC["ilPluginAdmin"];
         $this->tree = $DIC->repositoryTree();
-        //$this->db = $DIC->database();
-	$this->db = $db;
-	$this->updateGlobalScreenProviderCollection();
+        $this->provider_collection->setMainBarProvider(new Menu(self::dic()->dic(), $this));
     }
 
     /**
@@ -256,22 +253,6 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
                 $handler->handle($event, $parameters);
                 break;
         }
-    }
-
-
-    /**
-     * @inheritDoc
-     */
-    /*public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
-    {
-        return new Menu(self::dic()->dic(), $this);
-    }*/
-    
-    public function updateGlobalScreenProviderCollection() : PluginProviderCollection
-    {
-        $plugin_provider = new PluginProviderCollection();
-        $this->provider_collection = $plugin_provider->setMainBarProvider(new Menu(self::dic()->dic(), $this));
-        return $this->provider_collection;
     }
 
     public function getPrefix(): string

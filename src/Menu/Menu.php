@@ -4,7 +4,7 @@ namespace srag\Plugins\Certificate\Menu;
 
 use ilCertificatePlugin;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\AbstractBaseItem;
-use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
+use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticMainMenuPluginProvider;
 use ILIAS\UI\Component\Symbol\Icon\Standard;
 use ilUIPluginRouterGUI;
 use srag\DIC\Certificate\DICTrait;
@@ -19,7 +19,7 @@ use srCertificateUserGUI;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class Menu extends AbstractStaticPluginMainMenuProvider
+class Menu extends AbstractStaticMainMenuPluginProvider
 {
 
     use DICTrait;
