@@ -135,7 +135,8 @@ class srCertificateTypeTemplateFormGUI extends ilPropertyFormGUI
         }
 
         if (!count($types_available)) {
-            ilUtil::sendInfo($this->pl->txt('msg_no_template_types'));
+            global $tpl;
+            $tpl->setOnScreenMessage( 'info', $this->pl->txt('msg_no_template_types'), true);
         }
         $item = new ilSelectInputGUI($this->pl->txt('template_type_id'), 'template_type_id');
         $item->setOptions($types_available);

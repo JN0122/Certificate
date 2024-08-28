@@ -97,7 +97,8 @@ class srCertificateCustomTypeSettingFormGUI extends ilPropertyFormGUI
                 }
             }
         } catch (ilException $e) {
-            ilUtil::sendFailure($e->getMessage());
+            global $tpl;
+            $tpl->setOnScreenMessage( 'failure', $e->getMessage(), true);
 
             return false;
         }

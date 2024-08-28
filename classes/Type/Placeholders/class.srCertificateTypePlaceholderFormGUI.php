@@ -119,7 +119,8 @@ class srCertificateTypePlaceholderFormGUI extends ilPropertyFormGUI
                 $this->placeholder->setDefaultValue($this->getInput("default_value_{$lang_code}"), $lang_code);
             }
         } catch (ilException $e) {
-            ilUtil::sendFailure($e->getMessage());
+            global $tpl;
+            $tpl->setOnScreenMessage( 'failure', $e->getMessage(), true);
 
             return false;
         }

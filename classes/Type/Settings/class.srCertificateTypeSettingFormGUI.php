@@ -108,7 +108,8 @@ class srCertificateTypeSettingFormGUI extends ilPropertyFormGUI
                 $validity = $this->type->getSettingByIdentifier(srCertificateTypeSetting::IDENTIFIER_VALIDITY);
                 $validity->setValue('');
                 $validity->update();
-                ilUtil::sendInfo($this->pl->txt('msg_reset_validity'), true);
+                global $tpl;
+                $tpl->setOnScreenMessage( 'info', $this->pl->txt('msg_reset_validity'), true);
             }
         }
 

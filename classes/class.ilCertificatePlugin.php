@@ -185,9 +185,9 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
      */
     protected function beforeUpdate():bool
     {
+        global $tpl;
         if (!$this->checkPreConditions()) {
-            ilUtil::sendFailure("Please uninstall and remove legacy 'CertificateEvents' plugin from server, because it is incompatible / give conflict - It's now integrated in 'Certificate' plugin", true);
-
+            $tpl->setOnScreenMessage( 'failure', "Please uninstall and remove legacy 'CertificateEvents' plugin from server, because it is incompatible / give conflict - It's now integrated in 'Certificate' plugin", true);
             return false;
         }
 
@@ -219,10 +219,11 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
         $this->db->dropTable(srCertificateCustomDefinitionSetting::TABLE_NAME, false);
         $this->db->dropTable(srCertificateCustomTypeSetting::TABLE_NAME, false);
 
-        ilUtil::delDir(CLIENT_DATA_DIR . '/cert_signatures');
-        ilUtil::delDir(CLIENT_DATA_DIR . '/cert_templates');
-        ilUtil::delDir(CLIENT_DATA_DIR . '/cert_data');
-        ilUtil::delDir(CLIENT_DATA_DIR . '/cert_keys');
+
+        ilFileUtils::delDir(CLIENT_DATA_DIR . '/cert_signatures');
+        ilFileUtils::delDir(CLIENT_DATA_DIR . '/cert_templates');
+        ilFileUtils::delDir(CLIENT_DATA_DIR . '/cert_data');
+        ilFileUtils::delDir(CLIENT_DATA_DIR . '/cert_keys');
 
         return true;
     }

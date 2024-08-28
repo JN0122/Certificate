@@ -185,7 +185,8 @@ class srCertParticipationCertificateFormGUI extends PropertyFormGUI
             $options[$type->getId()] = $type->getTitle();
         }
         if (count($invalid) && $this->isNew) {
-            ilUtil::sendInfo(sprintf(self::plugin()->getPluginObject()->txt('msg_info_invalid_cert_types'),
+            global $tpl;
+            $tpl->setOnScreenMessage( 'info', sprintf(self::plugin()->getPluginObject()->txt('msg_info_invalid_cert_types'),
                 implode(', ', $invalid)));
         }
         asort($options);

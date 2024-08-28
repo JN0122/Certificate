@@ -441,7 +441,7 @@ class srCertificate extends ActiveRecord
                 ilFileUtils::delDir($tmp_dir);
                 ilFileDelivery::deliverFileLegacy($zip_file, $zip_filename . '.zip', '', false, true);
             } catch (ilFileException $e) {
-                ilUtil::sendInfo($e->getMessage());
+                $tpl->setOnScreenMessage( 'info', $e->getMessage(), true);
             }
         }
     }
