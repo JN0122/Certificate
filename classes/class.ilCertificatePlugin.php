@@ -111,7 +111,9 @@ class ilCertificatePlugin extends ilUserInterfaceHookPlugin
 
         $this->ilPluginAdmin = $DIC["ilPluginAdmin"];
         $this->tree = $DIC->repositoryTree();
-        $this->provider_collection->setMainBarProvider(new Menu(self::dic()->dic(), $this));
+        if(isset($DIC['global_screen'])){
+            $this->provider_collection->setMainBarProvider(new Menu(self::dic()->dic(), $this));
+        }
     }
 
     /**
